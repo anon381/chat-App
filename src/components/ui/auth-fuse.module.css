@@ -85,35 +85,35 @@
 }
 
 /* Dark mode styles */
-.dark .auth-bg {
+.auth-bg.dark {
   background: linear-gradient(135deg, #181824 0%, #232526 100%);
 }
-.dark .auth-container {
+.auth-container.dark {
   background: #181824;
 }
-.dark .auth-card {
+.auth-card.dark {
   background: #232526;
   color: #f1f5f9;
 }
-.dark .auth-input {
+.auth-input.dark {
   background: #181824;
   color: #f1f5f9;
   border: 1px solid #334155;
 }
-.dark .auth-btn {
+.auth-btn.dark {
   background: #6366f1;
   color: #fff;
 }
-.dark .auth-btn:hover {
+.auth-btn.dark:hover {
   background: #818cf8;
 }
-.dark .auth-link {
+.auth-link.dark {
   color: #818cf8;
 }
-.dark .auth-google {
+.auth-google.dark {
   background: #232526;
   color: #f1f5f9;
 }
-.dark .auth-quote {
+.auth-quote.dark {
   color: #cbd5e1;
 }
