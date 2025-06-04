@@ -268,11 +268,11 @@ export function AuthUI({ signInContent = {}, signUpContent = {} }: AuthUIProps) 
   const toggleForm = () => setIsSignIn((prev) => !prev);
 
   useEffect(() => {
-    const root = document.documentElement;
+    const body = document.body;
     if (isDark) {
-      root.classList.add("dark");
+      body.classList.add("dark");
     } else {
-      root.classList.remove("dark");
+      body.classList.remove("dark");
     }
   }, [isDark]);
 
@@ -288,32 +288,30 @@ export function AuthUI({ signInContent = {}, signUpContent = {} }: AuthUIProps) 
   const currentContent = isSignIn ? finalSignInContent : finalSignUpContent;
 
   return (
-    <div className={cn(styles["auth-bg"], isDark && "dark")}> {/* background wrapper */}
-      <div className={cn(styles["auth-container"], isDark && "dark")}> {/* container */}
-        <div className={cn(styles["auth-card"], isDark && "dark")}> {/* card */}
+    <div className={styles["auth-bg"]}> {/* background wrapper */}
+      <div className={styles["auth-container"]}> {/* container */}
+        <div className={styles["auth-card"]}> {/* card */}
           <button
             type="button"
-            className={cn(styles["auth-btn"], isDark && "dark")}
+            className={styles["auth-btn"]}
             style={{ marginBottom: "1rem" }}
             onClick={() => setIsDark((d) => !d)}
           >
             Switch to {isDark ? "Light" : "Dark"} Mode
           </button>
-          <div className={cn(styles["auth-title"], isDark && "dark")}>{isSignIn ? "Sign in to your account" : "Create an account"}</div>
+          <div className={styles["auth-title"]}>{isSignIn ? "Sign in to your account" : "Create an account"}</div>
           {isSignIn ? <SignInForm /> : <SignUpForm />}
-          <div className={cn(styles["auth-quote"], isDark && "dark")}>
+          <div className={styles["auth-quote"]}>
             “<Typewriter key={currentContent.quote.text} text={currentContent.quote.text} speed={60} />”<br />
             <span>— {currentContent.quote.author}</span>
           </div>
           <div style={{ textAlign: "center", marginTop: "1rem" }}>
             {isSignIn ? "Don't have an account?" : "Already have an account?"} {" "}
-            <span className={cn(styles["auth-link"], isDark && "dark")}
-              onClick={toggleForm}
-            >
+            <span className={styles["auth-link"]} onClick={toggleForm}>
               {isSignIn ? "Sign up" : "Sign in"}
             </span>
           </div>
-          <button className={cn(styles["auth-google"], isDark && "dark")} type="button" onClick={() => console.log("UI: Google button clicked")}> 
+          <button className={styles["auth-google"]} type="button" onClick={() => console.log("UI: Google button clicked")}> 
             <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google icon" style={{ width: "1.25rem", height: "1.25rem" }} />
             Continue with Google
           </button>
