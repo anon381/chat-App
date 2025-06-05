@@ -9,6 +9,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import styles from "./auth-fuse.module.css";
+import Switch from "@mui/material/Switch";
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -291,14 +292,15 @@ export function AuthUI({ signInContent = {}, signUpContent = {} }: AuthUIProps) 
     <div className={styles["auth-bg"]}> {/* background wrapper */}
       <div className={styles["auth-container"]}> {/* container */}
         <div className={styles["auth-card"]}> {/* card */}
-          <button
-            type="button"
-            className={styles["auth-btn"]}
-            style={{ marginBottom: "1rem" }}
-            onClick={() => setIsDark((d) => !d)}
-          >
-            Switch to {isDark ? "Light" : "Dark"} Mode
-          </button>
+          <div style={{ display: "flex", alignItems: "center", marginBottom: "1rem", justifyContent: "space-between" }}>
+            <span style={{ fontWeight: 500 }}>Dark Mode</span>
+            <Switch
+              checked={isDark}
+              onChange={() => setIsDark((d) => !d)}
+              color="primary"
+              inputProps={{ "aria-label": "toggle dark mode" }}
+            />
+          </div>
           <div className={styles["auth-title"]}>{isSignIn ? "Sign in to your account" : "Create an account"}</div>
           {isSignIn ? <SignInForm /> : <SignUpForm />}
           <div className={styles["auth-quote"]}>
