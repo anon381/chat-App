@@ -1,0 +1,119 @@
+.auth-bg {
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+}
+
+.auth-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+}
+
+.auth-card {
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 2px 15px -3px rgba(0,0,0,0.07), 0 10px 20px -2px rgba(0,0,0,0.04);
+  padding: 2rem;
+  max-width: 400px;
+  width: 100%;
+  color: #1e293b;
+}
+
+.auth-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.auth-input {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid #e2e8f0;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  background: #fff;
+  color: #1e293b;
+}
+
+.auth-btn {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  background: #6366f1;
+  color: #fff;
+  font-weight: 500;
+  border: none;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.auth-btn:hover {
+  background: #4f46e5;
+}
+
+.auth-link {
+  color: #6366f1;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.auth-google {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  background: #f1f5f9;
+  color: #334155;
+  font-weight: 500;
+  border: none;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.auth-quote {
+  font-size: 1rem;
+  color: #64748b;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+/* Dark mode styles */
+.dark .auth-bg {
+  background: linear-gradient(135deg, #181824 0%, #232526 100%);
+}
+.dark .auth-container {
+  background: #181824;
+}
+.dark .auth-card {
+  background: #232526;
+  color: #f1f5f9;
+}
+.dark .auth-input {
+  background: #181824;
+  color: #f1f5f9;
+  border: 1px solid #334155;
+}
+.dark .auth-btn {
+  background: #6366f1;
+  color: #fff;
+}
+.dark .auth-btn:hover {
+  background: #818cf8;
+}
+.dark .auth-link {
+  color: #818cf8;
+}
+.dark .auth-google {
+  background: #232526;
+  color: #f1f5f9;
+}
+.dark .auth-quote {
+  color: #cbd5e1;
+}
