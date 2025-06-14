@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 /*
   Page: Auth (Sign in / Sign up)
@@ -8,9 +8,8 @@
   Client-only: Uses useState and useRouter; no server components.
 */
 
-
-import { SignIn1 } from "@/components/ui/modern-stunning-sign-in"
+import { AuthUI } from "@/components/ui/auth-fuse";
 
 export default function Home() {
-  return <SignIn1 />
+  return <AuthUI />;
 }
