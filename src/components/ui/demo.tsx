@@ -1,7 +1,7 @@
-import { SignIn1 } from "@/components/ui/modern-stunning-sign-in"
+import { AuthUI } from "@/components/ui/auth-fuse"
 
-const Demo = () => {
-  return <SignIn1 />
+const DemoOne = () => {
+  return <AuthUI />
 }
 
-export { Demo }
+export default DemoOne
