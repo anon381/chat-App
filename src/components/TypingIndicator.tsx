@@ -1,0 +1,51 @@
+'use client'
+
+import { useState, useEffect } from 'react'
+
+interface TypingIndicatorProps {
+  isVisible: boolean
+  sender?: string
+}
+
+export default function TypingIndicator({ isVisible, sender }: TypingIndicatorProps) {
+  const [dotIndex, setDotIndex] = useState(0)
+
+  useEffect(() => {
+    if (!isVisible) return
+
+    const interval = setInterval(() => {
+      setDotIndex((prev) => (prev + 1) % 3)
+    }, 500)
+
+    return () => clearInterval(interval)
+  }, [isVisible])
+
+  if (!isVisible) return null
+
+  return (
+    <div className="flex justify-start mb-4 animate-fadeIn">
+      <div className="bg-white/80 backdrop-blur-sm rounded-3xl px-6 py-4 shadow-soft border border-gray-100/50 max-w-md">
+        <div className="flex items-center space-x-3">
+          {sender && (
+            <span className="text-sm font-medium text-gray-600 font-display">
+              {sender} is typing
+            </span>
+          )}
+          
+          <div className="flex space-x-2">
+            {[0, 1, 2].map((index) => (
+              <div
+                key={index}
+                className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ease-out ${
+                  index === dotIndex
+                    ? 'bg-primary-500 scale-125 shadow-glow'
+                    : 'bg-gray-300 scale-100'
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
