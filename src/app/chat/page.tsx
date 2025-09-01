@@ -303,21 +303,21 @@ export default function ChatPage() {
         {/* Message Input */}
         <div className="bg-slate-800/50 backdrop-blur-sm border-t border-white/10 p-6">
           <form onSubmit={handleSendMessage} className="flex space-x-4">
-            <div className="flex-1 relative">
-              <input
-                type="text"
-                value={newMessage}
-                onChange={handleTyping}
-                placeholder="Type a message..."
-                className="w-full px-6 py-4 bg-white/10 border border-white/20 rounded-2xl text-white placeholder-white/50 focus:outline-none focus:border-purple-500 focus:ring-4 focus:ring-purple-500/20 transition-all duration-300"
-                disabled={!isConnected}
-              />
-              <button className="absolute right-3 top-1/2 transform -translate-y-1/2 w-8 h-8 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors">
-                <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
-                </svg>
-              </button>
-            </div>
+                         <div className="flex-1 relative">
+               <input
+                 type="text"
+                 value={newMessage}
+                 onChange={handleTyping}
+                 placeholder="Type a message..."
+                 className="w-full px-6 py-4 pr-16 bg-white/10 border border-white/20 rounded-2xl text-white placeholder-white/50 focus:outline-none focus:border-purple-500 focus:ring-4 focus:ring-purple-500/20 transition-all duration-300"
+                 disabled={!isConnected}
+               />
+               <button className="absolute right-4 top-1/2 transform -translate-y-1/2 w-8 h-8 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors">
+                 <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+                 </svg>
+               </button>
+             </div>
             <InteractiveButton
               variant="primary"
               size="md"
