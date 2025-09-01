@@ -59,31 +59,31 @@ export default function MessageBubble({
             : 'hover:shadow-lg hover:scale-102'
         }`}
       >
-        {!isOwn && (
-          <p className="text-xs font-semibold text-gray-500 mb-1 opacity-80">
-            {sender}
-          </p>
-        )}
+                 {!isOwn && (
+           <p className="text-xs font-semibold text-purple-300 mb-2 opacity-90">
+             {sender}
+           </p>
+         )}
         
         <p className="text-sm leading-relaxed break-words">
           {content}
         </p>
         
-        <div className={`flex items-center justify-end mt-2 space-x-1 ${
-          isOwn ? 'text-indigo-100' : 'text-gray-400'
-        }`}>
-          <span className="text-xs opacity-75">
-            {formatTime(timestamp)}
-          </span>
-          
-          {isOwn && (
-            <div className="flex items-center space-x-1">
-              <div className="w-2 h-2 rounded-full bg-current opacity-50"></div>
-              <div className="w-2 h-2 rounded-full bg-current opacity-75"></div>
-              <div className="w-2 h-2 rounded-full bg-current"></div>
-            </div>
-          )}
-        </div>
+                 <div className={`flex items-center justify-end mt-3 space-x-2 ${
+           isOwn ? 'text-purple-200' : 'text-purple-300'
+         }`}>
+           <span className="text-xs opacity-90">
+             {formatTime(timestamp)}
+           </span>
+           
+           {isOwn && (
+             <div className="flex items-center space-x-1 ml-2">
+               <div className="w-2 h-2 rounded-full bg-current opacity-50"></div>
+               <div className="w-2 h-2 rounded-full bg-current opacity-75"></div>
+               <div className="w-2 h-2 rounded-full bg-current"></div>
+             </div>
+           )}
+         </div>
       </div>
     </div>
   )
