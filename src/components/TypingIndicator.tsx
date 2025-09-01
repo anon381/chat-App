@@ -25,14 +25,14 @@ export default function TypingIndicator({ isVisible, sender }: TypingIndicatorPr
   return (
     <div className="flex justify-start mb-4 animate-fadeIn">
       <div className="bg-white/10 backdrop-blur-sm rounded-3xl px-6 py-4 shadow-soft border border-white/20 max-w-md">
-        <div className="flex items-center space-x-3">
-          {sender && (
-            <span className="text-sm font-medium text-purple-300 font-display">
-              {sender} is typing
-            </span>
-          )}
-          
-          <div className="flex space-x-2">
+                 <div className="flex items-center space-x-4">
+           {sender && (
+             <span className="text-sm font-medium text-purple-300 font-display">
+               {sender} is typing
+             </span>
+           )}
+           
+           <div className="flex space-x-3">
             {[0, 1, 2].map((index) => (
               <div
                 key={index}
