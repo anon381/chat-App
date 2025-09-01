@@ -51,8 +51,8 @@ export default function MessageBubble({
       <div
         className={`max-w-xs lg:max-w-lg px-6 py-4 rounded-3xl transition-all duration-300 ease-out ${
           isOwn
-            ? 'bg-gradient-to-br from-primary-500 via-primary-600 to-accent-500 text-white shadow-soft'
-            : 'bg-white/90 backdrop-blur-sm text-gray-900 border border-gray-100/50 shadow-soft'
+            ? 'bg-gradient-to-br from-purple-500 via-blue-500 to-purple-600 text-white shadow-soft'
+            : 'bg-white/10 backdrop-blur-sm text-white border border-white/20 shadow-soft'
         } ${
           isHovered 
             ? 'shadow-glow scale-105' 
