@@ -49,7 +49,7 @@ export default function AnimatedInput({
 
   const labelClasses = `absolute left-4 sm:left-6 transition-all duration-300 ease-out pointer-events-none font-medium ${
     isFocused || hasValue
-      ? 'top-2 text-xs text-purple-300 bg-slate-900 px-2 sm:px-3 font-semibold'
+      ? 'top-2 text-xs text-purple-300 bg-slate-900 px-2 sm:px-3 font-semibold z-10'
       : 'top-3 sm:top-4 text-sm sm:text-base text-white/70'
   }`
 
