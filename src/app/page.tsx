@@ -2,9 +2,18 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import InteractiveButton from '@/components/InteractiveButton'
+import AnimatedInput from '@/components/AnimatedInput'
+import Notification from '@/components/Notification'
 
 export default function Home() {
   const [isLogin, setIsLogin] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
+  const [errors, setErrors] = useState<{[key: string]: string}>({})
+  const [notification, setNotification] = useState<{
+    message: string
+    type: 'success' | 'error' | 'info'
+  } | null>(null)
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -14,6 +23,8 @@ export default function Home() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setIsLoading(true)
+    setErrors({})
     
     try {
       const endpoint = isLogin ? '/api/auth/login' : '/api/auth/register'
@@ -28,14 +39,32 @@ export default function Home() {
       if (response.ok) {
         const data = await response.json()
         localStorage.setItem('token', data.token)
-        router.push('/chat')
+        setNotification({
+          message: isLogin ? 'Login successful! Redirecting...' : 'Account created successfully! Redirecting...',
+          type: 'success'
+        })
+        setTimeout(() => router.push('/chat'), 1500)
       } else {
         const error = await response.json()
-        alert(error.message || 'An error occurred')
+        if (error.message.includes('email')) {
+          setErrors({ email: error.message })
+        } else if (error.message.includes('username')) {
+          setErrors({ username: error.message })
+        } else if (error.message.includes('password')) {
+          setErrors({ password: error.message })
+        } else {
+          setErrors({ general: error.message })
+        }
+        setNotification({
+          message: error.message,
+          type: 'error'
+        })
       }
     } catch (error) {
       console.error('Auth error:', error)
-      alert('An error occurred. Please try again.')
+      setErrors({ general: 'An error occurred. Please try again.' })
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -47,18 +76,32 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
-      <div className="max-w-md w-full space-y-8 p-8">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-blue-50/30 to-accent-50/30 relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%229C92AC%22%20fill-opacity%3D%220.03%22%3E%3Ccircle%20cx%3D%2230%22%20cy%3D%2230%22%20r%3D%222%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-50"></div>
+      
+      {notification && (
+        <Notification
+          message={notification.message}
+          type={notification.type}
+          onClose={() => setNotification(null)}
+        />
+      )}
+      
+      <div className="w-full max-w-md mx-auto space-y-8 p-6 sm:p-8 animate-bounceIn relative z-10">
         <div className="text-center">
-          <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
-            {isLogin ? 'Sign in to your account' : 'Create your account'}
+          <h2 className="mt-6 text-4xl font-bold text-gray-900 animate-fadeIn font-display">
+            {isLogin ? 'Welcome back!' : 'Join us today!'}
           </h2>
-          <p className="mt-2 text-sm text-gray-600">
+          <p className="mt-3 text-lg text-gray-600 font-medium">
+            {isLogin ? 'Sign in to continue chatting' : 'Create your account to start chatting'}
+          </p>
+          <p className="mt-4 text-sm text-gray-500">
             {isLogin ? "Don't have an account? " : 'Already have an account? '}
             <button
               type="button"
               onClick={() => setIsLogin(!isLogin)}
-              className="font-medium text-indigo-600 hover:text-indigo-500"
+              className="font-semibold text-primary-600 hover:text-primary-700 transition-colors duration-200 hover:underline"
             >
               {isLogin ? 'Sign up' : 'Sign in'}
             </button>
@@ -66,65 +109,61 @@ export default function Home() {
         </div>
         
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          <div className="rounded-md shadow-sm -space-y-px">
+          <div className="space-y-4">
             {!isLogin && (
-              <div>
-                <label htmlFor="username" className="sr-only">
-                  Username
-                </label>
-                <input
-                  id="username"
-                  name="username"
-                  type="text"
-                  required={!isLogin}
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="Username"
-                  value={formData.username}
-                  onChange={handleInputChange}
-                />
-              </div>
+              <AnimatedInput
+                id="username"
+                name="username"
+                type="text"
+                label="Username"
+                value={formData.username}
+                onChange={handleInputChange}
+                required={!isLogin}
+                error={errors.username}
+              />
             )}
-            <div>
-              <label htmlFor="email" className="sr-only">
-                Email address
-              </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Email address"
-                value={formData.email}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div>
-              <label htmlFor="password" className="sr-only">
-                Password
-              </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                autoComplete="current-password"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Password"
-                value={formData.password}
-                onChange={handleInputChange}
-              />
-            </div>
+            
+            <AnimatedInput
+              id="email"
+              name="email"
+              type="email"
+              label="Email address"
+              value={formData.email}
+              onChange={handleInputChange}
+              required
+              autoComplete="email"
+              error={errors.email}
+            />
+            
+            <AnimatedInput
+              id="password"
+              name="password"
+              type="password"
+              label="Password"
+              value={formData.password}
+              onChange={handleInputChange}
+              required
+              autoComplete={isLogin ? "current-password" : "new-password"}
+              error={errors.password}
+            />
           </div>
 
+          {errors.general && (
+            <div className="text-red-600 text-sm text-center bg-red-50 p-3 rounded-lg animate-fadeIn">
+              {errors.general}
+            </div>
+          )}
+
           <div>
-            <button
-              type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            <InteractiveButton
+              variant="primary"
+              size="lg"
+              loading={isLoading}
+              disabled={isLoading}
+              className="w-full"
             >
               {isLogin ? 'Sign in' : 'Sign up'}
-            </button>
+            </InteractiveButton>
           </div>
         </form>
       </div>
