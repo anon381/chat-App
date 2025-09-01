@@ -41,16 +41,16 @@ export default function AnimatedInput({
   const handleBlur = () => setIsFocused(false)
 
   const baseClasses = 'relative w-full'
-  const inputClasses = `w-full px-4 sm:px-6 py-3 sm:py-4 border-2 rounded-xl sm:rounded-2xl transition-all duration-300 ease-out bg-white/80 backdrop-blur-sm focus:outline-none focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 ${
+  const inputClasses = `w-full px-4 sm:px-6 py-3 sm:py-4 border-2 rounded-xl sm:rounded-2xl transition-all duration-300 ease-out bg-white/10 backdrop-blur-sm focus:outline-none focus:ring-4 focus:ring-purple-500/20 focus:border-purple-500 text-white placeholder-white/50 ${
     error 
-      ? 'border-red-300 focus:ring-red-500/20 focus:border-red-500' 
-      : 'border-gray-200 hover:border-gray-300 focus:border-primary-500'
+      ? 'border-red-400 focus:ring-red-500/20 focus:border-red-500' 
+      : 'border-white/20 hover:border-white/40 focus:border-purple-500'
   } ${className}`
 
   const labelClasses = `absolute left-4 sm:left-6 transition-all duration-300 ease-out pointer-events-none font-medium ${
     isFocused || hasValue
-      ? 'top-2 text-xs text-primary-600 bg-white px-2 sm:px-3 font-semibold'
-      : 'top-3 sm:top-4 text-sm sm:text-base text-gray-500'
+      ? 'top-2 text-xs text-purple-300 bg-slate-900 px-2 sm:px-3 font-semibold'
+      : 'top-3 sm:top-4 text-sm sm:text-base text-white/70'
   }`
 
   return (
@@ -74,11 +74,11 @@ export default function AnimatedInput({
         {required && <span className="text-red-500 ml-1">*</span>}
       </label>
       
-      {error && (
-        <div className="mt-1 text-sm text-red-600 animate-fadeIn">
-          {error}
-        </div>
-      )}
+             {error && (
+         <div className="mt-1 text-sm text-red-400 animate-fadeIn">
+           {error}
+         </div>
+       )}
     </div>
   )
 }
