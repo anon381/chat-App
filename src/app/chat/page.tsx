@@ -3,6 +3,9 @@
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { io, Socket } from 'socket.io-client'
+import MessageBubble from '@/components/MessageBubble'
+import TypingIndicator from '@/components/TypingIndicator'
+import InteractiveButton from '@/components/InteractiveButton'
 
 interface Message {
   id: string
@@ -24,6 +27,8 @@ export default function ChatPage() {
   const [socket, setSocket] = useState<Socket | null>(null)
   const [user, setUser] = useState<User | null>(null)
   const [isConnected, setIsConnected] = useState(false)
+  const [isTyping, setIsTyping] = useState(false)
+  const [typingTimeout, setTypingTimeout] = useState<NodeJS.Timeout | null>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const router = useRouter()
 
@@ -90,7 +95,32 @@ export default function ChatPage() {
       
       socket.emit('sendMessage', message)
       setNewMessage('')
+      setIsTyping(false)
     }
+  }
+
+  const handleTyping = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewMessage(e.target.value)
+    
+    if (!isTyping && socket) {
+      setIsTyping(true)
+      socket.emit('typing', { user: user?.username })
+    }
+    
+    // Clear existing timeout
+    if (typingTimeout) {
+      clearTimeout(typingTimeout)
+    }
+    
+    // Set new timeout to stop typing indicator
+    const timeout = setTimeout(() => {
+      setIsTyping(false)
+      if (socket) {
+        socket.emit('stopTyping', { user: user?.username })
+      }
+    }, 1000)
+    
+    setTypingTimeout(timeout)
   }
 
   const handleLogout = () => {
@@ -110,73 +140,68 @@ export default function ChatPage() {
   }
 
   return (
-    <div className="h-screen flex flex-col bg-gray-100">
+    <div className="h-screen flex flex-col bg-gradient-to-br from-gray-50 via-blue-50/20 to-accent-50/20">
       {/* Header */}
-      <div className="bg-white shadow-sm border-b px-6 py-4 flex justify-between items-center">
+      <div className="bg-white/80 backdrop-blur-sm shadow-soft border-b border-gray-200/50 px-8 py-6 flex justify-between items-center">
         <div>
-          <h1 className="text-xl font-semibold text-gray-900">Chat App</h1>
-          <p className="text-sm text-gray-500">
-            Welcome, {user.username}
-            <span className={`ml-2 inline-block w-2 h-2 rounded-full ${isConnected ? 'bg-green-500' : 'bg-red-500'}`}></span>
+          <h1 className="text-2xl font-bold text-gray-900 font-display">Chat App</h1>
+          <p className="text-sm text-gray-600 font-medium">
+            Welcome back, <span className="text-primary-600 font-semibold">{user.username}</span>
+            <span className={`ml-3 inline-block w-3 h-3 rounded-full ${isConnected ? 'bg-green-500 shadow-glow' : 'bg-red-500'}`}></span>
           </p>
         </div>
-        <button
+        <InteractiveButton
           onClick={handleLogout}
-          className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors"
+          variant="secondary"
+          size="sm"
         >
           Logout
-        </button>
+        </InteractiveButton>
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4">
-        {messages.map((message) => (
-          <div
+      <div className="flex-1 overflow-y-auto px-8 py-6 space-y-6">
+        <div className="max-w-4xl mx-auto">
+        {messages.map((message, index) => (
+          <MessageBubble
             key={message.id}
-            className={`flex ${message.isOwn ? 'justify-end' : 'justify-start'}`}
-          >
-            <div
-              className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
-                message.isOwn
-                  ? 'bg-indigo-600 text-white'
-                  : 'bg-white text-gray-900 shadow-sm'
-              }`}
-            >
-              {!message.isOwn && (
-                <p className="text-xs font-medium text-gray-500 mb-1">
-                  {message.sender}
-                </p>
-              )}
-              <p className="text-sm">{message.content}</p>
-              <p className={`text-xs mt-1 ${
-                message.isOwn ? 'text-indigo-200' : 'text-gray-500'
-              }`}>
-                {new Date(message.timestamp).toLocaleTimeString()}
-              </p>
-            </div>
-          </div>
+            id={message.id}
+            content={message.content}
+            sender={message.sender}
+            timestamp={message.timestamp}
+            isOwn={message.isOwn}
+            index={index}
+          />
         ))}
+        
+        <TypingIndicator 
+          isVisible={isTyping} 
+          sender={user?.username}
+        />
+        
         <div ref={messagesEndRef} />
+        </div>
       </div>
 
       {/* Message Input */}
-      <div className="bg-white border-t px-6 py-4">
-        <form onSubmit={handleSendMessage} className="flex space-x-4">
+      <div className="bg-white/80 backdrop-blur-sm border-t border-gray-200/50 px-8 py-6">
+        <form onSubmit={handleSendMessage} className="flex space-x-4 max-w-4xl mx-auto">
           <input
             type="text"
             value={newMessage}
-            onChange={(e) => setNewMessage(e.target.value)}
+            onChange={handleTyping}
             placeholder="Type a message..."
-            className="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+            className="flex-1 max-w-2xl px-6 py-4 border-2 border-gray-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 transition-all duration-300 bg-white/90 backdrop-blur-sm"
             disabled={!isConnected}
           />
-          <button
-            type="submit"
+          <InteractiveButton
+            variant="primary"
+            size="md"
             disabled={!newMessage.trim() || !isConnected}
-            className="px-6 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="px-8"
           >
             Send
-          </button>
+          </InteractiveButton>
         </form>
       </div>
     </div>
