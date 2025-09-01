@@ -24,10 +24,10 @@ export default function TypingIndicator({ isVisible, sender }: TypingIndicatorPr
 
   return (
     <div className="flex justify-start mb-4 animate-fadeIn">
-      <div className="bg-white/80 backdrop-blur-sm rounded-3xl px-6 py-4 shadow-soft border border-gray-100/50 max-w-md">
+      <div className="bg-white/10 backdrop-blur-sm rounded-3xl px-6 py-4 shadow-soft border border-white/20 max-w-md">
         <div className="flex items-center space-x-3">
           {sender && (
-            <span className="text-sm font-medium text-gray-600 font-display">
+            <span className="text-sm font-medium text-purple-300 font-display">
               {sender} is typing
             </span>
           )}
@@ -38,8 +38,8 @@ export default function TypingIndicator({ isVisible, sender }: TypingIndicatorPr
                 key={index}
                 className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ease-out ${
                   index === dotIndex
-                    ? 'bg-primary-500 scale-125 shadow-glow'
-                    : 'bg-gray-300 scale-100'
+                    ? 'bg-purple-400 scale-125 shadow-glow'
+                    : 'bg-white/30 scale-100'
                 }`}
               />
             ))}
