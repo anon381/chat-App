@@ -43,6 +43,16 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+  .hero-icon {
+    width: 16px;
+    height: 16px;
+    display: block;
+    flex: none;
+  }
+  .auth-logo svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
 }
 
 /* Custom animations */
