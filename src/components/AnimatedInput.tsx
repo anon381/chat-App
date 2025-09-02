@@ -41,16 +41,16 @@ export default function AnimatedInput({
   const handleBlur = () => setIsFocused(false)
 
   const baseClasses = 'relative w-full'
-  const inputClasses = `w-full px-4 sm:px-6 py-3 sm:py-4 border-2 rounded-xl sm:rounded-2xl transition-all duration-300 ease-out bg-white/10 backdrop-blur-sm focus:outline-none focus:ring-4 focus:ring-purple-500/20 focus:border-purple-500 text-white placeholder-white/50 ${
+  const inputClasses = `w-full px-3 sm:px-4 py-2.5 sm:py-3 border rounded-lg transition-all duration-200 ease-out bg-white/10 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-500 text-white placeholder-white/50 ${
     error 
-      ? 'border-red-400 focus:ring-red-500/20 focus:border-red-500' 
-      : 'border-white/20 hover:border-white/40 focus:border-purple-500'
+    ? 'border-red-400 focus:ring-red-500/20 focus:border-red-500' 
+    : 'border-white/20 hover:border-white/30'
   } ${className}`
 
-  const labelClasses = `absolute left-4 sm:left-6 transition-all duration-300 ease-out pointer-events-none font-medium ${
+  const labelClasses = `absolute left-3 sm:left-4 transition-all duration-200 ease-out pointer-events-none font-medium ${
     isFocused || hasValue
-      ? 'top-2 text-xs text-purple-300 bg-slate-900 px-2 sm:px-3 font-semibold z-10'
-      : 'top-3 sm:top-4 text-sm sm:text-base text-white/70'
+    ? 'top-1.5 text-xs text-purple-200 bg-slate-900 px-1.5 sm:px-2 font-semibold z-10'
+    : 'top-2.5 sm:top-3.5 text-sm text-white/70'
   }`
 
   return (
