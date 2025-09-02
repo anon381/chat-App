@@ -1,3 +1,7 @@
+/**
+ * Tailwind CSS configuration
+ * Purpose: Configure content paths, theme extensions (fonts, colors, shadows), and plugins.
+ */
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
