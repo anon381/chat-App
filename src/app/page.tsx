@@ -96,107 +96,108 @@ export default function Home() {
           onClose={() => setNotification(null)}
         />
       )}
-      
-  <div className="w-full max-w-sm sm:max-w-md mx-auto space-y-5 sm:space-y-7 p-4 sm:p-6 lg:p-8 animate-bounceIn relative z-10">
-        {/* Logo and branding */}
-        <div className="text-center">
-          <div className="auth-logo mx-auto w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-purple-500 to-blue-500 rounded-2xl flex items-center justify-center mb-4 sm:mb-6 shadow-2xl">
-            <svg
-              className="text-white hero-icon"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              width={16}
-              height={16}
-              preserveAspectRatio="xMidYMid meet"
-              aria-hidden="true"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                vectorEffect="non-scaling-stroke"
-                d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-              />
-            </svg>
-          </div>
-          
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white animate-fadeIn font-display mb-2.5 sm:mb-3.5">
-            {isLogin ? 'Welcome Back!' : 'Join ChatFlow'}
-          </h2>
-          <p className="text-base sm:text-lg text-purple-200 font-medium mb-2">
-            {isLogin ? 'Continue your conversations' : 'Start your messaging journey'}
-          </p>
-          <p className="text-purple-300 text-sm">
-            {isLogin ? "Don't have an account? " : 'Already have an account? '}
-            <button
-              type="button"
-              onClick={() => setIsLogin(!isLogin)}
-              className="font-semibold text-white hover:text-purple-200 transition-colors duration-200 hover:underline"
-            >
-              {isLogin ? 'Sign up' : 'Sign in'}
-            </button>
-          </p>
-        </div>
-        
-        <form className="mt-6 sm:mt-8 space-y-4 sm:space-y-6" onSubmit={handleSubmit}>
-          <div className="space-y-3 sm:space-y-4">
-            {!isLogin && (
-              <AnimatedInput
-                id="username"
-                name="username"
-                type="text"
-                label="Username"
-                value={formData.username}
-                onChange={handleInputChange}
-                required={!isLogin}
-                error={errors.username}
-              />
-            )}
-            
-            <AnimatedInput
-              id="email"
-              name="email"
-              type="email"
-              label="Email address"
-              value={formData.email}
-              onChange={handleInputChange}
-              required
-              autoComplete="email"
-              error={errors.email}
-            />
-            
-            <AnimatedInput
-              id="password"
-              name="password"
-              type="password"
-              label="Password"
-              value={formData.password}
-              onChange={handleInputChange}
-              required
-              autoComplete={isLogin ? "current-password" : "new-password"}
-              error={errors.password}
-            />
-          </div>
-
-          {errors.general && (
-            <div className="text-red-400 text-sm text-center bg-red-900/20 backdrop-blur-sm border border-red-500/30 p-3 rounded-xl animate-fadeIn">
-              {errors.general}
+      <div className="relative z-10 w-full max-w-md mx-auto px-4">
+        <div className="animate-bounceIn rounded-2xl bg-slate-900/60 backdrop-blur-xl border border-white/10 shadow-2xl p-6 sm:p-8">
+          {/* Logo and branding */}
+          <div className="text-center mb-5 sm:mb-6">
+            <div className="auth-logo mx-auto w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-purple-500 to-blue-500 rounded-2xl flex items-center justify-center mb-4 shadow-2xl">
+              <svg
+                className="text-white hero-icon"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                width={16}
+                height={16}
+                preserveAspectRatio="xMidYMid meet"
+                aria-hidden="true"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  vectorEffect="non-scaling-stroke"
+                  d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+                />
+              </svg>
             </div>
-          )}
 
-          <div>
-            <InteractiveButton
-              variant="primary"
-              size="lg"
-              loading={isLoading}
-              disabled={isLoading}
-              className="w-full bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600"
-            >
-              {isLogin ? 'Sign in' : 'Sign up'}
-            </InteractiveButton>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white animate-fadeIn font-display mb-2">
+              {isLogin ? 'Welcome Back!' : 'Join ChatFlow'}
+            </h2>
+            <p className="text-sm sm:text-base text-purple-200 font-medium mb-2">
+              {isLogin ? 'Continue your conversations' : 'Start your messaging journey'}
+            </p>
+            <p className="text-purple-300 text-sm">
+              {isLogin ? "Don't have an account? " : 'Already have an account? '}
+              <button
+                type="button"
+                onClick={() => setIsLogin(!isLogin)}
+                className="font-semibold text-white hover:text-purple-200 transition-colors duration-200 hover:underline"
+              >
+                {isLogin ? 'Sign up' : 'Sign in'}
+              </button>
+            </p>
           </div>
-        </form>
+
+          <form className="space-y-4 sm:space-y-5" onSubmit={handleSubmit}>
+            <div className="space-y-3 sm:space-y-4">
+              {!isLogin && (
+                <AnimatedInput
+                  id="username"
+                  name="username"
+                  type="text"
+                  label="Username"
+                  value={formData.username}
+                  onChange={handleInputChange}
+                  required={!isLogin}
+                  error={errors.username}
+                />
+              )}
+
+              <AnimatedInput
+                id="email"
+                name="email"
+                type="email"
+                label="Email address"
+                value={formData.email}
+                onChange={handleInputChange}
+                required
+                autoComplete="email"
+                error={errors.email}
+              />
+
+              <AnimatedInput
+                id="password"
+                name="password"
+                type="password"
+                label="Password"
+                value={formData.password}
+                onChange={handleInputChange}
+                required
+                autoComplete={isLogin ? "current-password" : "new-password"}
+                error={errors.password}
+              />
+            </div>
+
+            {errors.general && (
+              <div className="text-red-400 text-sm text-center bg-red-900/20 backdrop-blur-sm border border-red-500/30 p-3 rounded-xl animate-fadeIn">
+                {errors.general}
+              </div>
+            )}
+
+            <div>
+              <InteractiveButton
+                variant="primary"
+                size="lg"
+                loading={isLoading}
+                disabled={isLoading}
+                className="w-full bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600"
+              >
+                {isLogin ? 'Sign in' : 'Sign up'}
+              </InteractiveButton>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   )
