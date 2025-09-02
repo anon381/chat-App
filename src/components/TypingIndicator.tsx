@@ -1,5 +1,11 @@
 'use client'
 
+/*
+  Component: TypingIndicator
+  Purpose: Shows an animated three-dot indicator and optional sender label when isVisible is true.
+  Uses a simple interval to cycle the active dot. Client-only.
+*/
+
 import { useState, useEffect } from 'react'
 
 interface TypingIndicatorProps {
