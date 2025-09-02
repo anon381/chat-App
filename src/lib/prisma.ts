@@ -1,3 +1,8 @@
+/**
+ * Library: prisma.ts
+ * Purpose: Export a singleton PrismaClient instance to avoid exhausting database connections
+ * during hot reloads in development.
+ */
 import { PrismaClient } from '@prisma/client'
 
 const globalForPrisma = globalThis as unknown as {
