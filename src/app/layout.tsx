@@ -1,3 +1,8 @@
+/*
+  File: RootLayout (src/app/layout.tsx)
+  Purpose: Global HTML shell for all routes. Sets metadata, loads global CSS, and applies the Inter font.
+  Notes: This is a server component that wraps every page in the app directory.
+*/
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
