@@ -61,7 +61,7 @@ export default function Notification({
       isExiting ? 'translate-x-full opacity-0' : 'translate-x-0 opacity-100'
     }`}>
       <div className="flex items-center space-x-3">
-        <span className={`text-lg font-bold ${iconClasses[type]}`}>
+  <span className={`text-base font-bold ${iconClasses[type]}`}>
           {icons[type]}
         </span>
         <span className="font-medium">{message}</span>
