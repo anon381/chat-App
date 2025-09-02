@@ -100,9 +100,24 @@ export default function Home() {
   <div className="w-full max-w-sm sm:max-w-md mx-auto space-y-5 sm:space-y-7 p-4 sm:p-6 lg:p-8 animate-bounceIn relative z-10">
         {/* Logo and branding */}
         <div className="text-center">
-          <div className="mx-auto w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-purple-500 to-blue-500 rounded-3xl flex items-center justify-center mb-4 sm:mb-6 shadow-2xl">
-            <svg className="w-8 h-8 sm:w-10 sm:h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+          <div className="auth-logo mx-auto w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-purple-500 to-blue-500 rounded-2xl flex items-center justify-center mb-4 sm:mb-6 shadow-2xl">
+            <svg
+              className="text-white hero-icon"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              width={16}
+              height={16}
+              preserveAspectRatio="xMidYMid meet"
+              aria-hidden="true"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                vectorEffect="non-scaling-stroke"
+                d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+              />
             </svg>
           </div>
           
