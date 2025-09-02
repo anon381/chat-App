@@ -1,5 +1,11 @@
 'use client'
 
+/*
+  Component: InteractiveButton
+  Purpose: Reusable button with variant (primary/secondary/danger) and size (sm/md/lg) styles,
+  press/hover animations, and an optional loading spinner overlay. Client-only.
+*/
+
 import { useState } from 'react'
 
 interface InteractiveButtonProps {
