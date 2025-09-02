@@ -140,7 +140,8 @@ export default function Home() {
           </div>
 
           <form className="space-y-4 sm:space-y-5" onSubmit={handleSubmit}>
-            <div className="space-y-3 sm:space-y-4">
+            <div className="mx-auto w-full max-w-[18rem] sm:max-w-[20rem]">
+              <div className="space-y-3 sm:space-y-4">
               {!isLogin && (
                 <AnimatedInput
                   id="username"
@@ -177,24 +178,25 @@ export default function Home() {
                 autoComplete={isLogin ? "current-password" : "new-password"}
                 error={errors.password}
               />
-            </div>
-
-            {errors.general && (
-              <div className="text-red-400 text-sm text-center bg-red-900/20 backdrop-blur-sm border border-red-500/30 p-3 rounded-xl animate-fadeIn">
-                {errors.general}
               </div>
-            )}
 
-            <div>
-              <InteractiveButton
-                variant="primary"
-                size="lg"
-                loading={isLoading}
-                disabled={isLoading}
-                className="w-full bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600"
-              >
-                {isLogin ? 'Sign in' : 'Sign up'}
-              </InteractiveButton>
+              {errors.general && (
+                <div className="mt-2 text-red-400 text-sm text-center bg-red-900/20 backdrop-blur-sm border border-red-500/30 p-3 rounded-xl animate-fadeIn">
+                  {errors.general}
+                </div>
+              )}
+
+              <div className="mt-4">
+                <InteractiveButton
+                  variant="primary"
+                  size="lg"
+                  loading={isLoading}
+                  disabled={isLoading}
+                  className="w-full bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600"
+                >
+                  {isLogin ? 'Sign in' : 'Sign up'}
+                </InteractiveButton>
+              </div>
             </div>
           </form>
         </div>
