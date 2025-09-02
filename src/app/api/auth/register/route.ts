@@ -1,3 +1,5 @@
+// Route: POST /api/auth/register
+// Purpose: Create a new user after validating username/email uniqueness and password length. Returns JWT and profile on success.
 import { NextRequest, NextResponse } from 'next/server'
 import { createUser, getUserByEmail, getUserByUsername, generateToken } from '@/lib/auth'
 
