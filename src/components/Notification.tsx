@@ -1,5 +1,11 @@
 'use client'
 
+/*
+  Component: Notification
+  Purpose: Temporary toast notification with success/error/info variants. Auto-dismisses after duration
+  and supports manual close via onClose callback. Client-only.
+*/
+
 import { useState, useEffect } from 'react'
 
 interface NotificationProps {
