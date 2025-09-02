@@ -37,14 +37,18 @@ export default function AnimatedInput({
   className = '',
   disabled = false,
 }: AnimatedInputProps) {
+  // Track focus to control placeholder visibility and styles
   const [isFocused, setIsFocused] = useState(false)
+  // Whether the input currently has a non-empty value
   const [hasValue, setHasValue] = useState(false)
 
   useEffect(() => {
+    // Update hasValue whenever the value prop changes
     setHasValue(Boolean(value && value.length > 0))
   }, [value])
 
   const baseClasses = 'relative w-full'
+  // Compose input classes and switch placeholder color based on focus/value state
   const inputClasses = `w-full h-8 px-2 py-1 border rounded text-xs leading-4 transition-all duration-200 ease-out bg-white/10 backdrop-blur-sm focus:outline-none focus:ring-1 focus:ring-primary-500/30 focus:border-primary-500 text-white ${
     error
       ? 'border-red-400 focus:ring-red-500/20 focus:border-red-500'
@@ -67,16 +71,20 @@ export default function AnimatedInput({
         onChange={onChange}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
-  required={required}
+        // Required/autoComplete bubble through to the native input
+        required={required}
         autoComplete={autoComplete}
-  placeholder={effectivePlaceholder}
-  className={inputClasses}
+        // Use dynamic placeholder based on focus/value state
+        placeholder={effectivePlaceholder}
+        className={inputClasses}
         aria-invalid={Boolean(error) || undefined}
         aria-describedby={error ? errorId : undefined}
-  aria-label={label}
+        // Provide label text to screen readers since there’s no visible label element
+        aria-label={label}
         disabled={disabled}
       />
 
+      {/* Inline validation message below the input when error is present */}
       {error && (
         <div id={errorId} className="mt-1 text-sm text-red-400 animate-fadeIn">
           {error}
