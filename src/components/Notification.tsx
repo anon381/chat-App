@@ -21,10 +21,12 @@ export default function Notification({
   duration = 5000, 
   onClose 
 }: NotificationProps) {
+  // Mounted state toggles rendering; exiting triggers slide-out animation
   const [isVisible, setIsVisible] = useState(true)
   const [isExiting, setIsExiting] = useState(false)
 
   useEffect(() => {
+    // Auto-dismiss after the provided duration
     const timer = setTimeout(() => {
       handleClose()
     }, duration)
@@ -33,6 +35,7 @@ export default function Notification({
   }, [duration])
 
   const handleClose = () => {
+    // Start exit animation then unmount after a small delay
     setIsExiting(true)
     setTimeout(() => {
       setIsVisible(false)
@@ -42,6 +45,7 @@ export default function Notification({
 
   if (!isVisible) return null
 
+  // Base/variant classes control visuals; exit anim slides it out of view
   const baseClasses = 'fixed top-6 right-6 z-50 p-6 rounded-2xl shadow-soft transform transition-all duration-300 ease-in-out backdrop-blur-sm'
   
   const typeClasses = {
