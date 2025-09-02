@@ -1,5 +1,11 @@
 'use client'
 
+/*
+  Component: MessageBubble
+  Purpose: Renders an individual chat message with owner/other styling, staggered entrance animation,
+  optional sender label, timestamp, and delivery ticks for own messages. Client-only.
+*/
+
 import { useState, useEffect } from 'react'
 
 interface MessageBubbleProps {
