@@ -39,11 +39,11 @@ export default function AnimatedInput({
   }, [value])
 
   const baseClasses = 'relative w-full'
-  const inputClasses = `w-full px-3 sm:px-4 pt-5 sm:pt-6 pb-2.5 sm:pb-3 border rounded-lg leading-6 transition-all duration-200 ease-out bg-white/10 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-500 text-white ${
+  const inputClasses = `w-full px-3 sm:px-3.5 pt-3 sm:pt-3.5 pb-2 sm:pb-2.5 border rounded-md text-sm leading-5 transition-all duration-200 ease-out bg-white/10 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-500 text-white ${
     error
       ? 'border-red-400 focus:ring-red-500/20 focus:border-red-500'
       : 'border-white/20 hover:border-white/30'
-  } ${disabled ? 'opacity-60 cursor-not-allowed' : ''} ${(!isFocused && !hasValue) ? 'placeholder-white/40' : 'placeholder-transparent'} ${className}`
+  } ${disabled ? 'opacity-60 cursor-not-allowed' : ''} ${(!isFocused && !hasValue) ? 'placeholder-white/35' : 'placeholder-transparent'} ${className}`
 
   // Placeholder is faint when idle, disappears on focus/typing
   const rawPlaceholder = placeholder ?? label
