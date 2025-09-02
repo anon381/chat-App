@@ -140,8 +140,8 @@ export default function Home() {
             </p>
           </div>
 
-      <form className="space-y-6 sm:space-y-7" onSubmit={handleSubmit}>
-        <div className="space-y-5 sm:space-y-6">
+      <form className="space-y-8 sm:space-y-9" onSubmit={handleSubmit}>
+        <div className="space-y-6 sm:space-y-7">
               {!isLogin && (
                 <div className="p-1.5 sm:p-2 rounded-md">
                   <AnimatedInput
@@ -187,12 +187,12 @@ export default function Home() {
               </div>
 
               {errors.general && (
-                <div className="mt-2 text-red-400 text-sm text-center bg-red-900/20 backdrop-blur-sm border border-red-500/30 p-3 rounded-xl animate-fadeIn">
+                <div className="mt-4 text-red-400 text-sm text-center bg-red-900/20 backdrop-blur-sm border border-red-500/30 p-3 rounded-xl animate-fadeIn">
                   {errors.general}
                 </div>
               )}
 
-              <div className="mt-6 sm:mt-7 p-1.5 sm:p-2 rounded-md">
+              <div className="mt-8 sm:mt-9 p-2 sm:p-3 rounded-md">
                 <InteractiveButton
                   variant="primary"
                   size="lg"
