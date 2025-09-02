@@ -5,10 +5,12 @@ import { getUserByEmail, verifyPassword, generateToken } from '@/lib/auth'
 
 export async function POST(request: NextRequest) {
   try {
+    // Parse JSON body
     const { email, password } = await request.json()
 
     // Validate input
     if (!email || !password) {
+      // Missing credentials -> 400 Bad Request
       return NextResponse.json(
         { message: 'Email and password are required' },
         { status: 400 }
@@ -18,6 +20,7 @@ export async function POST(request: NextRequest) {
     // Find user
     const user = await getUserByEmail(email)
     if (!user) {
+      // Do not reveal which field failed -> generic 401
       return NextResponse.json(
         { message: 'Invalid email or password' },
         { status: 401 }
@@ -27,6 +30,7 @@ export async function POST(request: NextRequest) {
     // Verify password
     const isValidPassword = await verifyPassword(password, user.password)
     if (!isValidPassword) {
+      // Wrong password -> same generic 401
       return NextResponse.json(
         { message: 'Invalid email or password' },
         { status: 401 }
@@ -40,6 +44,7 @@ export async function POST(request: NextRequest) {
       email: user.email,
     })
 
+    // Success response with JWT and minimal user profile
     return NextResponse.json({
       message: 'Login successful',
       token,
@@ -50,6 +55,7 @@ export async function POST(request: NextRequest) {
       }
     })
   } catch (error) {
+    // Unexpected error
     console.error('Login error:', error)
     return NextResponse.json(
       { message: 'Internal server error' },
