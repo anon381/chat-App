@@ -38,6 +38,7 @@ export default function MessageBubble({
   }, [index])
 
   const formatTime = (date: Date) => {
+    // Render a compact hour:minute timestamp
     return new Date(date).toLocaleTimeString([], { 
       hour: '2-digit', 
       minute: '2-digit' 
@@ -46,6 +47,7 @@ export default function MessageBubble({
 
   return (
     <div
+      // Align to right for own messages, left otherwise; animate in from below
       className={`flex ${isOwn ? 'justify-end' : 'justify-start'} transform transition-all duration-300 ease-out ${
         isVisible 
           ? 'opacity-100 translate-y-0' 
@@ -55,6 +57,7 @@ export default function MessageBubble({
       onMouseLeave={() => setIsHovered(false)}
     >
       <div
+        // Own vs other styling, with hover/pressed shadow/scale feedback
         className={`max-w-xs lg:max-w-lg px-5 py-3.5 rounded-2xl transition-all duration-200 ease-out ${
           isOwn
             ? 'bg-gradient-to-br from-purple-500 via-blue-500 to-purple-600 text-white shadow-soft'
@@ -65,17 +68,20 @@ export default function MessageBubble({
             : 'hover:shadow-md hover:scale-[1.01]'
         }`}
       >
-                 {!isOwn && (
+        {/* Show sender label only for messages from others */}
+        {!isOwn && (
            <p className="text-xs font-semibold text-purple-300 mb-2 opacity-90">
              {sender}
            </p>
          )}
         
-  <p className="text-sm leading-relaxed break-words">
+        {/* Message text content */}
+        <p className="text-sm leading-relaxed break-words">
           {content}
         </p>
         
-                 <div className={`flex items-center justify-end mt-3 space-x-2 ${
+        {/* Footer with timestamp and delivery indicator for own messages */}
+        <div className={`flex items-center justify-end mt-3 space-x-2 ${
            isOwn ? 'text-purple-200' : 'text-purple-300'
          }`}>
            <span className="text-xs opacity-90">
