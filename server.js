@@ -23,6 +23,7 @@ const io = new Server(httpServer, {
 // Store connected users
 const connectedUsers = new Map()
 
+// Authenticate each incoming socket using the provided JWT
 io.use((socket, next) => {
   const token = socket.handshake.auth.token
   if (!token) {
@@ -30,6 +31,7 @@ io.use((socket, next) => {
   }
 
   try {
+    // Verify token; stash user id/payload on socket for later use
     const decoded = jwt.verify(token, JWT_SECRET)
     socket.userId = decoded.id
     socket.userData = decoded
@@ -42,7 +44,7 @@ io.use((socket, next) => {
 io.on('connection', async (socket) => {
   console.log(`User ${socket.userData.username} connected`)
   
-  // Store user connection
+  // Store user connection (so we could DM later if needed)
   connectedUsers.set(socket.userId, {
     socketId: socket.id,
     userData: socket.userData
@@ -51,7 +53,7 @@ io.on('connection', async (socket) => {
   // Send user data to client
   socket.emit('userData', socket.userData)
 
-  // Send recent messages
+  // Send recent messages on join
   try {
     const messages = await prisma.message.findMany({
       take: 50,
@@ -78,7 +80,7 @@ io.on('connection', async (socket) => {
     console.error('Error fetching messages:', error)
   }
 
-  // Handle new messages
+  // Handle new messages from this client
   socket.on('sendMessage', async (messageData) => {
     try {
       const message = await prisma.message.create({
@@ -103,7 +105,7 @@ io.on('connection', async (socket) => {
         isOwn: false
       }
 
-      // Broadcast to all connected users
+  // Broadcast to all connected users (including sender)
       io.emit('message', formattedMessage)
     } catch (error) {
       console.error('Error saving message:', error)
@@ -111,6 +113,7 @@ io.on('connection', async (socket) => {
     }
   })
 
+  // Cleanup on disconnect
   socket.on('disconnect', () => {
     console.log(`User ${socket.userData.username} disconnected`)
     connectedUsers.delete(socket.userId)
