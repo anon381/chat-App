@@ -1,3 +1,9 @@
+/**
+ * Library: auth.ts
+ * Purpose: Authentication helpers including password hashing/verification (bcrypt),
+ * JWT generation/verification, and basic user queries/creation via Prisma.
+ * Notes: JWT secret comes from env (fallback in dev). Tokens expire in 7d.
+ */
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import { prisma } from './prisma'
