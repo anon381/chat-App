@@ -41,14 +41,15 @@ export default function ChatPage() {
   const router = useRouter()
 
   useEffect(() => {
-    // Check if user is authenticated
+    // 1) Check if user is authenticated via JWT in localStorage
     const token = localStorage.getItem('token')
     if (!token) {
+      // If no token, redirect back to auth page
       router.push('/')
       return
     }
 
-    // Initialize socket connection
+    // 2) Initialize socket connection with token for auth handshake
     const newSocket = io('http://localhost:3001', {
       auth: {
         token: token
@@ -57,7 +58,7 @@ export default function ChatPage() {
 
     setSocket(newSocket)
 
-    // Socket event listeners
+    // 3) Socket event listeners to track connectivity and receive data
     newSocket.on('connect', () => {
       setIsConnected(true)
       console.log('Connected to server')
@@ -69,33 +70,40 @@ export default function ChatPage() {
     })
 
     newSocket.on('userData', (userData: User) => {
+      // Server sends decoded user payload once connected
       setUser(userData)
     })
 
     newSocket.on('message', (message: Message) => {
+      // Append a single incoming message
       setMessages(prev => [...prev, message])
     })
 
     newSocket.on('messages', (messagesData: Message[]) => {
+      // Initial batch of recent messages
       setMessages(messagesData)
     })
 
     return () => {
+      // 4) Cleanup socket on unmount
       newSocket.close()
     }
   }, [router])
 
   useEffect(() => {
+    // Scroll chat view when messages change
     scrollToBottom()
   }, [messages])
 
   const scrollToBottom = () => {
+    // Smoothly keep the latest message visible
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }
 
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault()
     if (newMessage.trim() && socket && user) {
+      // Trim and emit message to server; server fills id/timestamp
       const message: Omit<Message, 'id' | 'timestamp' | 'isOwn'> = {
         content: newMessage.trim(),
         sender: user.username,
@@ -108,19 +116,20 @@ export default function ChatPage() {
   }
 
   const handleTyping = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewMessage(e.target.value)
+    setNewMessage(e.target.value) // update input value
     
     if (!isTyping && socket) {
+      // Notify server once when typing starts
       setIsTyping(true)
       socket.emit('typing', { user: user?.username })
     }
     
-    // Clear existing timeout
+    // Clear existing timeout so we debounce the stopTyping event
     if (typingTimeout) {
       clearTimeout(typingTimeout)
     }
     
-    // Set new timeout to stop typing indicator
+    // Set new timeout to stop typing indicator if user pauses for 1s
     const timeout = setTimeout(() => {
       setIsTyping(false)
       if (socket) {
@@ -132,6 +141,7 @@ export default function ChatPage() {
   }
 
   const handleLogout = () => {
+    // Clear JWT and go back to auth page
     localStorage.removeItem('token')
     router.push('/')
   }
