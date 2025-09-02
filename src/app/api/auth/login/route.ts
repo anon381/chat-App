@@ -1,3 +1,5 @@
+// Route: POST /api/auth/login
+// Purpose: Verify user credentials, return JWT and basic user profile. Validates inputs and responds with 401 on failure.
 import { NextRequest, NextResponse } from 'next/server'
 import { getUserByEmail, verifyPassword, generateToken } from '@/lib/auth'
 
