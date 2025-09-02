@@ -49,14 +49,14 @@ export default function MessageBubble({
       onMouseLeave={() => setIsHovered(false)}
     >
       <div
-        className={`max-w-xs lg:max-w-lg px-6 py-4 rounded-3xl transition-all duration-300 ease-out ${
+        className={`max-w-xs lg:max-w-lg px-5 py-3.5 rounded-2xl transition-all duration-200 ease-out ${
           isOwn
             ? 'bg-gradient-to-br from-purple-500 via-blue-500 to-purple-600 text-white shadow-soft'
             : 'bg-white/10 backdrop-blur-sm text-white border border-white/20 shadow-soft'
         } ${
           isHovered 
-            ? 'shadow-glow scale-105' 
-            : 'hover:shadow-lg hover:scale-102'
+            ? 'shadow-glow scale-[1.02]' 
+            : 'hover:shadow-md hover:scale-[1.01]'
         }`}
       >
                  {!isOwn && (
@@ -65,7 +65,7 @@ export default function MessageBubble({
            </p>
          )}
         
-        <p className="text-sm leading-relaxed break-words">
+  <p className="text-sm leading-relaxed break-words">
           {content}
         </p>
         
