@@ -1,5 +1,13 @@
 'use client'
 
+/*
+  Page: Chat
+  Purpose: Real-time chat interface. Ensures a JWT exists, connects to Socket.IO backend (server.js on :3001),
+  listens for messages, typing indicators, and user data, and sends messages/typing events. Provides logout to clear JWT.
+  UI: Sidebar with contacts (mock), main chat thread with MessageBubble components, typing indicator, and message input.
+  Client-only: Uses local state, effects, and socket.io-client; not a server component.
+*/
+
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { io, Socket } from 'socket.io-client'
