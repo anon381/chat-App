@@ -96,8 +96,9 @@ export default function Home() {
           onClose={() => setNotification(null)}
         />
       )}
-      <div className="relative z-10 w-full max-w-sm mx-auto px-3 sm:px-4">
-  <div className="animate-bounceIn rounded-2xl bg-slate-900/60 backdrop-blur-xl border-[0.5px] border-white/10 shadow-2xl p-5 sm:p-6">
+      <div className="relative z-10 w-auto mx-auto px-3 sm:px-4">
+        <div className="animate-bounceIn rounded-2xl bg-slate-900/60 backdrop-blur-xl border-[0.5px] border-white/10 shadow-2xl p-5 sm:p-6">
+          <div className="w-[18rem] sm:w-[20rem]">
           {/* Logo and branding */}
           <div className="text-center mb-5 sm:mb-6">
             <div className="auth-logo mx-auto w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-purple-500 to-blue-500 rounded-2xl flex items-center justify-center mb-4 shadow-2xl">
@@ -140,7 +141,6 @@ export default function Home() {
           </div>
 
           <form className="space-y-4 sm:space-y-5" onSubmit={handleSubmit}>
-            <div className="mx-auto w-full max-w-[18rem] sm:max-w-[20rem]">
               <div className="space-y-3 sm:space-y-4">
               {!isLogin && (
                 <AnimatedInput
@@ -197,8 +197,8 @@ export default function Home() {
                   {isLogin ? 'Sign in' : 'Sign up'}
                 </InteractiveButton>
               </div>
-            </div>
           </form>
+          </div>
         </div>
       </div>
     </div>
