@@ -1,3 +1,9 @@
+/**
+ * Socket.IO server (server.js)
+ * Purpose: Authenticates clients via JWT, broadcasts/receives chat messages, and persists them with Prisma.
+ * Ports: Runs on 3001 by default; CORS allows http://localhost:3000 (Next.js dev).
+ * Data: On connect, sends userData and last 50 messages; listens for sendMessage and emits message to all clients.
+ */
 const { createServer } = require('http')
 const { Server } = require('socket.io')
 const jwt = require('jsonwebtoken')
