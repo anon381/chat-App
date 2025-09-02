@@ -5,10 +5,12 @@ import { createUser, getUserByEmail, getUserByUsername, generateToken } from '@/
 
 export async function POST(request: NextRequest) {
   try {
+    // Parse JSON body
     const { username, email, password } = await request.json()
 
     // Validate input
     if (!username || !email || !password) {
+      // Required fields missing -> 400 Bad Request
       return NextResponse.json(
         { message: 'Username, email, and password are required' },
         { status: 400 }
@@ -16,6 +18,7 @@ export async function POST(request: NextRequest) {
     }
 
     if (password.length < 6) {
+      // Simple password policy on the edge (backend)
       return NextResponse.json(
         { message: 'Password must be at least 6 characters long' },
         { status: 400 }
@@ -25,6 +28,7 @@ export async function POST(request: NextRequest) {
     // Check if user already exists
     const existingUserByEmail = await getUserByEmail(email)
     if (existingUserByEmail) {
+      // Email in use -> 400 with clear message
       return NextResponse.json(
         { message: 'User with this email already exists' },
         { status: 400 }
@@ -33,6 +37,7 @@ export async function POST(request: NextRequest) {
 
     const existingUserByUsername = await getUserByUsername(username)
     if (existingUserByUsername) {
+      // Username in use -> 400 with clear message
       return NextResponse.json(
         { message: 'Username already taken' },
         { status: 400 }
@@ -49,6 +54,7 @@ export async function POST(request: NextRequest) {
       email: user.email,
     })
 
+    // Success: return minimal profile and JWT for subsequent requests
     return NextResponse.json({
       message: 'User created successfully',
       token,
@@ -59,6 +65,7 @@ export async function POST(request: NextRequest) {
       }
     })
   } catch (error) {
+    // Unexpected error
     console.error('Registration error:', error)
     return NextResponse.json(
       { message: 'Internal server error' },
