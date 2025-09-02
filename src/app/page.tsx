@@ -29,30 +29,36 @@ export default function Home() {
   })
   const router = useRouter()
 
+  // Handle form submit for both Sign in and Sign up
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setIsLoading(true)
-    setErrors({})
+    setIsLoading(true) // show loading state on button
+    setErrors({}) // clear any previous field errors
     
     try {
+      // Pick the correct API route depending on mode
       const endpoint = isLogin ? '/api/auth/login' : '/api/auth/register'
       const response = await fetch(endpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
+        // Send username/email/password; username may be blank in login mode
         body: JSON.stringify(formData),
       })
 
       if (response.ok) {
+        // Success path: save JWT and show success notification
         const data = await response.json()
         localStorage.setItem('token', data.token)
         setNotification({
           message: isLogin ? 'Login successful! Redirecting...' : 'Account created successfully! Redirecting...',
           type: 'success'
         })
+        // Give user a brief moment to see the message, then navigate to chat
         setTimeout(() => router.push('/chat'), 1500)
       } else {
+        // Error path: map backend message to a specific field when possible
         const error = await response.json()
         if (error.message.includes('email')) {
           setErrors({ email: error.message })
@@ -63,19 +69,23 @@ export default function Home() {
         } else {
           setErrors({ general: error.message })
         }
+        // Also show a toast-like notification for visibility
         setNotification({
           message: error.message,
           type: 'error'
         })
       }
     } catch (error) {
+      // Network/unknown failures end up here
       console.error('Auth error:', error)
       setErrors({ general: 'An error occurred. Please try again.' })
     } finally {
+      // Always end loading state, regardless of success/failure
       setIsLoading(false)
     }
   }
 
+  // Keep form data in sync with input fields
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
@@ -85,14 +95,14 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
-      {/* Animated background elements */}
+      {/* Animated background elements: decorative soft blobs */}
       <div className="absolute inset-0">
         <div className="absolute top-20 left-20 w-48 sm:w-72 h-48 sm:h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
         <div className="absolute top-40 right-20 w-48 sm:w-72 h-48 sm:h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse" style={{animationDelay: '2s'}}></div>
         <div className="absolute -bottom-8 left-40 w-48 sm:w-72 h-48 sm:h-72 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse" style={{animationDelay: '4s'}}></div>
       </div>
       
-      {/* Floating chat bubbles */}
+      {/* Floating chat bubbles: animated accents for theme coherence */}
       <div className="absolute top-10 left-10 w-12 sm:w-16 h-12 sm:h-16 bg-white/10 backdrop-blur-sm rounded-full animate-bounce" style={{animationDelay: '1s'}}></div>
       <div className="absolute top-32 right-16 w-10 sm:w-12 h-10 sm:h-12 bg-white/10 backdrop-blur-sm rounded-full animate-bounce" style={{animationDelay: '2s'}}></div>
       <div className="absolute bottom-20 left-20 w-16 sm:w-20 h-16 sm:h-20 bg-white/10 backdrop-blur-sm rounded-full animate-bounce" style={{animationDelay: '3s'}}></div>
@@ -107,7 +117,7 @@ export default function Home() {
       <div className="relative z-10 w-auto mx-auto px-3 sm:px-4 my-4 sm:my-6">
         <div className="animate-bounceIn rounded-2xl bg-slate-900/60 backdrop-blur-xl border-[0.5px] border-white/10 shadow-2xl p-6 sm:p-7 overflow-hidden">
           <div className="w-full max-w-[18rem] sm:max-w-[20rem] mx-auto px-3 sm:px-4 py-2 sm:py-3">
-          {/* Logo and branding */}
+          {/* Logo and branding header */}
           <div className="text-center mb-5 sm:mb-6">
             <div className="auth-logo mx-auto w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-purple-500 to-blue-500 rounded-2xl flex items-center justify-center mb-4 shadow-2xl">
               <svg
@@ -148,6 +158,7 @@ export default function Home() {
             </p>
           </div>
 
+      {/* Form body: username (signup only), email, password */}
       <form className="space-y-8 sm:space-y-9" onSubmit={handleSubmit}>
         <div className="space-y-6 sm:space-y-7">
               {!isLogin && (
@@ -200,6 +211,7 @@ export default function Home() {
                 </div>
               )}
 
+              {/* Submit button: disabled while isLoading */}
               <div className="mt-8 sm:mt-9 p-2 sm:p-3 rounded-md">
                 <InteractiveButton
                   variant="primary"
