@@ -96,8 +96,8 @@ export default function Home() {
           onClose={() => setNotification(null)}
         />
       )}
-      <div className="relative z-10 w-full max-w-md mx-auto px-4">
-        <div className="animate-bounceIn rounded-2xl bg-slate-900/60 backdrop-blur-xl border border-white/10 shadow-2xl p-6 sm:p-8">
+      <div className="relative z-10 w-full max-w-sm mx-auto px-3 sm:px-4">
+        <div className="animate-bounceIn rounded-2xl bg-slate-900/60 backdrop-blur-xl border border-white/10 shadow-2xl p-5 sm:p-6">
           {/* Logo and branding */}
           <div className="text-center mb-5 sm:mb-6">
             <div className="auth-logo mx-auto w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-purple-500 to-blue-500 rounded-2xl flex items-center justify-center mb-4 shadow-2xl">
