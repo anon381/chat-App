@@ -1,5 +1,11 @@
 'use client'
 
+/*
+  Component: AnimatedInput
+  Purpose: Small text/password input with subtle focus ring; shows a faint placeholder at rest that
+  disappears on focus/typing. Displays inline error text and supports accessibility attributes.
+*/
+
 import { useState, useEffect } from 'react'
 
 interface AnimatedInputProps {
