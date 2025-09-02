@@ -14,11 +14,13 @@ interface TypingIndicatorProps {
 }
 
 export default function TypingIndicator({ isVisible, sender }: TypingIndicatorProps) {
+  // Index of the active dot in the trio (0..2)
   const [dotIndex, setDotIndex] = useState(0)
 
   useEffect(() => {
     if (!isVisible) return
 
+    // Cycle through dots every 500ms while visible
     const interval = setInterval(() => {
       setDotIndex((prev) => (prev + 1) % 3)
     }, 500)
