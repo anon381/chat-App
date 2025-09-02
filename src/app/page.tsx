@@ -97,8 +97,8 @@ export default function Home() {
         />
       )}
       <div className="relative z-10 w-auto mx-auto px-3 sm:px-4 my-4 sm:my-6">
-        <div className="animate-bounceIn rounded-2xl bg-slate-900/60 backdrop-blur-xl border-[0.5px] border-white/10 shadow-2xl p-5 sm:p-6 overflow-hidden">
-          <div className="w-full max-w-[18rem] sm:max-w-[20rem] mx-auto px-2 sm:px-3">
+        <div className="animate-bounceIn rounded-2xl bg-slate-900/60 backdrop-blur-xl border-[0.5px] border-white/10 shadow-2xl p-6 sm:p-7 overflow-hidden">
+          <div className="w-full max-w-[18rem] sm:max-w-[20rem] mx-auto px-3 sm:px-4 py-2 sm:py-3">
           {/* Logo and branding */}
           <div className="text-center mb-5 sm:mb-6">
             <div className="auth-logo mx-auto w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-purple-500 to-blue-500 rounded-2xl flex items-center justify-center mb-4 shadow-2xl">
@@ -140,44 +140,50 @@ export default function Home() {
             </p>
           </div>
 
-          <form className="space-y-4 sm:space-y-5" onSubmit={handleSubmit}>
-              <div className="space-y-3 sm:space-y-4">
+          <form className="space-y-5 sm:space-y-6" onSubmit={handleSubmit}>
+              <div className="space-y-4 sm:space-y-5">
               {!isLogin && (
-                <AnimatedInput
-                  id="username"
-                  name="username"
-                  type="text"
-                  label="Username"
-                  value={formData.username}
-                  onChange={handleInputChange}
-                  required={!isLogin}
-                  error={errors.username}
-                />
+                <div className="p-1.5 sm:p-2 rounded-md">
+                  <AnimatedInput
+                    id="username"
+                    name="username"
+                    type="text"
+                    label="Username"
+                    value={formData.username}
+                    onChange={handleInputChange}
+                    required={!isLogin}
+                    error={errors.username}
+                  />
+                </div>
               )}
 
-              <AnimatedInput
-                id="email"
-                name="email"
-                type="email"
-                label="Email address"
-                value={formData.email}
-                onChange={handleInputChange}
-                required
-                autoComplete="email"
-                error={errors.email}
-              />
+              <div className="p-1.5 sm:p-2 rounded-md">
+                <AnimatedInput
+                  id="email"
+                  name="email"
+                  type="email"
+                  label="Email address"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  required
+                  autoComplete="email"
+                  error={errors.email}
+                />
+              </div>
 
-              <AnimatedInput
-                id="password"
-                name="password"
-                type="password"
-                label="Password"
-                value={formData.password}
-                onChange={handleInputChange}
-                required
-                autoComplete={isLogin ? "current-password" : "new-password"}
-                error={errors.password}
-              />
+              <div className="p-1.5 sm:p-2 rounded-md">
+                <AnimatedInput
+                  id="password"
+                  name="password"
+                  type="password"
+                  label="Password"
+                  value={formData.password}
+                  onChange={handleInputChange}
+                  required
+                  autoComplete={isLogin ? "current-password" : "new-password"}
+                  error={errors.password}
+                />
+              </div>
               </div>
 
               {errors.general && (
@@ -186,7 +192,7 @@ export default function Home() {
                 </div>
               )}
 
-              <div className="mt-4">
+              <div className="mt-4 p-1.5 sm:p-2 rounded-md">
                 <InteractiveButton
                   variant="primary"
                   size="lg"
