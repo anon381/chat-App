@@ -9,7 +9,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import styles from "./auth-fuse.module.css";
-import Switch from "@mui/material/Switch";
+import Switch from "@/components/ui/sky-toggle";
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -182,24 +182,69 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
 PasswordInput.displayName = "PasswordInput";
 
 function SignInForm() {
-  const handleSignIn = (event: React.FormEvent<HTMLFormElement>) => { event.preventDefault(); console.log("UI: Sign In form submitted"); };
+  const [error, setError] = useState("");
+  const handleSignIn = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setError("");
+    const form = event.currentTarget;
+    const email = form.email.value;
+    const password = form.password.value;
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || "Login failed");
+      // Store JWT, redirect, etc.
+      localStorage.setItem("token", data.token);
+      window.location.href = "/chat";
+    } catch (err: any) {
+      setError(err.message);
+    }
+  };
   return (
     <form onSubmit={handleSignIn} autoComplete="on">
       <input className={styles["auth-input"]} id="email" name="email" type="email" placeholder="m@example.com" required autoComplete="email" />
       <input className={styles["auth-input"]} name="password" type="password" placeholder="Password" required autoComplete="current-password" />
       <button className={styles["auth-btn"]} type="submit">Sign In</button>
+      {error && <div style={{ color: "#ef4444", marginTop: "0.5rem" }}>{error}</div>}
     </form>
   );
 }
 
 function SignUpForm() {
-  const handleSignUp = (event: React.FormEvent<HTMLFormElement>) => { event.preventDefault(); console.log("UI: Sign Up form submitted"); };
+  const [error, setError] = useState("");
+  const handleSignUp = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setError("");
+    const form = event.currentTarget as HTMLFormElement;
+    const name = (form.elements.namedItem("name") as HTMLInputElement)?.value;
+    const email = (form.elements.namedItem("email") as HTMLInputElement)?.value;
+    const password = (form.elements.namedItem("password") as HTMLInputElement)?.value;
+    try {
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username: name, email, password })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || "Registration failed");
+      // Store JWT, redirect, etc.
+      localStorage.setItem("token", data.token);
+      window.location.href = "/chat";
+    } catch (err: any) {
+      setError(err.message);
+    }
+  };
   return (
     <form onSubmit={handleSignUp} autoComplete="on">
       <input className={styles["auth-input"]} id="name" name="name" type="text" placeholder="John Doe" required autoComplete="name" />
       <input className={styles["auth-input"]} id="email" name="email" type="email" placeholder="m@example.com" required autoComplete="email" />
       <input className={styles["auth-input"]} name="password" type="password" placeholder="Password" required autoComplete="new-password" />
       <button className={styles["auth-btn"]} type="submit">Sign Up</button>
+      {error && <div style={{ color: "#ef4444", marginTop: "0.5rem" }}>{error}</div>}
     </form>
   );
 }
@@ -269,11 +314,11 @@ export function AuthUI({ signInContent = {}, signUpContent = {} }: AuthUIProps) 
   const toggleForm = () => setIsSignIn((prev) => !prev);
 
   useEffect(() => {
-    const body = document.body;
+    const html = document.documentElement;
     if (isDark) {
-      body.classList.add("dark");
+      html.classList.add("dark");
     } else {
-      body.classList.remove("dark");
+      html.classList.remove("dark");
     }
   }, [isDark]);
 
@@ -294,12 +339,7 @@ export function AuthUI({ signInContent = {}, signUpContent = {} }: AuthUIProps) 
         <div className={styles["auth-card"]}> {/* card */}
           <div style={{ display: "flex", alignItems: "center", marginBottom: "1rem", justifyContent: "space-between" }}>
             <span style={{ fontWeight: 500 }}>Dark Mode</span>
-            <Switch
-              checked={isDark}
-              onChange={() => setIsDark((d) => !d)}
-              color="primary"
-              inputProps={{ "aria-label": "toggle dark mode" }}
-            />
+            <Switch checked={isDark} onChange={() => setIsDark((d) => !d)} />
           </div>
           <div className={styles["auth-title"]}>{isSignIn ? "Sign in to your account" : "Create an account"}</div>
           {isSignIn ? <SignInForm /> : <SignUpForm />}
